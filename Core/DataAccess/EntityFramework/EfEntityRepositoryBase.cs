@@ -12,34 +12,46 @@ namespace Core.DataAccess.EntityFramework
         where TEntity : class, IEntity, new()
         where TContext : DbContext, new()
     {
-        public void Add(TEntity entity)
+        public int Add(TEntity entity)
         {
+            int result;
+
             using (TContext context = new TContext())
             {
                 var addedEntity = context.Entry(entity);
                 addedEntity.State = EntityState.Added;
-                context.SaveChanges();
+                result = context.SaveChanges(); // SaveChanges method returns the number of added items into DB. It is assigned to variable "result".
             }
+
+            return result;
         }
 
-        public void Delete(TEntity entity)
+        public int Delete(TEntity entity)
         {
+            int result;
+
             using (TContext context = new TContext())
             {
                 var deletedEntity = context.Entry(entity);
                 deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
+                result = context.SaveChanges();
             }
+
+            return result;
         }
 
-        public void Update(TEntity entity)
+        public int Update(TEntity entity)
         {
+            int result;
+
             using (TContext context = new TContext())
             {
                 var updatedEntity = context.Entry(entity);
                 updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
+                result = context.SaveChanges();
             }
+
+            return result;
         }
 
         public TEntity Get(Expression<Func<TEntity, bool>> filter)

@@ -4,6 +4,8 @@ using System.Text;
 using Business.Abstract;
 using Entities.Concrete;
 using DataAccess.Abstract;
+using Entities.Dto;
+using DataAccess.Concrete.EntityFramework;
 
 namespace Business.Concrete
 {
@@ -20,7 +22,25 @@ namespace Business.Concrete
         {
             if (ValidateCarName(car))
             {
-                _carDal.Add(car);
+                if (_carDal.Add(car) > 0) // Check if car was added into DB successfully.
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Delete(Car car)
+        {
+            if (_carDal.Delete(car) > 0) // Check if car was added into DB successfully.
+            {
                 return true;
             }
             else
@@ -29,14 +49,16 @@ namespace Business.Concrete
             }
         }
 
-        public void Delete(Car car)
+        public bool Update(Car car)
         {
-            _carDal.Delete(car);
-        }
-
-        public void Update(Car car)
-        {
-            _carDal.Update(car);
+            if (_carDal.Update(car) > 0) // Check if car was added into DB successfully.
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public List<Car> GetCarsByBrandId(int brandId)
@@ -51,7 +73,7 @@ namespace Business.Concrete
 
         private bool ValidateCarName(Car car)
         {
-            if (car.Description.Length>2 && car.DailyPrice>0 )
+            if (car.CarName.Length>2 && car.DailyPrice>0 )
             {
                 return true;
             }
@@ -66,9 +88,15 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-        //public Car GetById(int id)
-        //{
-        //    return _carDal.GetById(id);
-        //}
+        public Car GetById(int Id)
+        {
+            return _carDal.Get(c => c.CarId == Id);
+        }
+
+        public List<ProductDetailDto> GetProductDetails()
+        {
+            return _carDal.GetProductDetails();
+        }
+
     }
 }

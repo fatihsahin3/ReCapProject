@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dto;
 
 namespace DataAccess.Concrete.InMemory
 {
@@ -30,15 +31,17 @@ namespace DataAccess.Concrete.InMemory
             };
         }
 
-        public void Add(Car car)
+        public int Add(Car car)
         {
             _cars.Add(car);
+            return 1;
         }
 
-        public void Delete(Car car)
+        public int Delete(Car car)
         {
             Car carToDelete = _cars.SingleOrDefault<Car>(c => c.CarId == car.CarId);
             _cars.Remove(carToDelete);
+            return 1;
         }
 
         public Car Get(Expression<Func<Car, bool>> filter)
@@ -61,7 +64,12 @@ namespace DataAccess.Concrete.InMemory
             return _cars.SingleOrDefault<Car>(c => c.CarId == CarId);
         }
 
-        public void Update(Car car)
+        public List<ProductDetailDto> GetProductDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Update(Car car)
         {
             Car carToUpdate = _cars.SingleOrDefault<Car>(c => c.CarId == car.CarId);
             carToUpdate.BrandId = car.BrandId;
@@ -69,6 +77,8 @@ namespace DataAccess.Concrete.InMemory
             carToUpdate.ModelYear = car.ModelYear;
             carToUpdate.DailyPrice = car.DailyPrice;
             carToUpdate.Description = car.Description;
+
+            return 1;
         }
     }
 }
