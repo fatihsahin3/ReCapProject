@@ -6,6 +6,8 @@ using Entities.Concrete;
 using DataAccess.Abstract;
 using Entities.Dto;
 using DataAccess.Concrete.EntityFramework;
+using Core.Utilities.Results;
+using Business.Constraints;
 
 namespace Business.Concrete
 {
@@ -18,28 +20,72 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public bool Add(Car car)
+        public IResult Add(Car car)
         {
-            if (ValidateCarName(car))
+            if (ValidateCarData(car))
             {
-                if (_carDal.Add(car) > 0) // Check if car was added into DB successfully.
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                _carDal.Add(car);
+                return new SuccessResult(Messages.CarAdded);
             }
-            else
-            {
-                return false;
-            }
+
+            return new ErrorResult(Messages.CarDataInvalid);
         }
 
-        public bool Delete(Car car)
+        public IResult Delete(Car car)
         {
-            if (_carDal.Delete(car) > 0) // Check if car was added into DB successfully.
+            _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
+        }
+
+        public IResult Update(Car car)
+        {
+            if (ValidateCarData(car))
+            {
+                _carDal.Update(car);
+                return new SuccessResult(Messages.CarUpdated);
+            }
+
+            return new ErrorResult(Messages.CarDataInvalid);
+        }
+
+        public IDataResult<Car> GetById(int Id)
+        {
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == Id), Messages.CarsListed);
+        }
+
+        public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
+        {
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId), Messages.CarsListed);
+        }
+
+        public IDataResult<List<Car>> GetCarsByColorId(int colorId)
+        {
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId), Messages.CarsListed);
+        }
+
+        public IDataResult<List<Car>> GetAll()
+        {
+            if (false) //DateTime.Now.Hour > 22 || DateTime.Now.Hour < 8
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
+
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
+        }
+
+        public IDataResult<List<ProductDetailDto>> GetProductDetails()
+        {
+            if (false) //DateTime.Now.Hour > 22 || DateTime.Now.Hour < 8
+            {
+                return new ErrorDataResult<List<ProductDetailDto>>(Messages.MaintenanceTime);
+            }
+
+            return new SuccessDataResult<List<ProductDetailDto>>(_carDal.GetProductDetails(), Messages.CarsListed);
+        }
+
+        private bool ValidateCarData(Car car)
+        {
+            if (car.CarName.Length > 2 && car.DailyPrice > 0)
             {
                 return true;
             }
@@ -48,55 +94,5 @@ namespace Business.Concrete
                 return false;
             }
         }
-
-        public bool Update(Car car)
-        {
-            if (_carDal.Update(car) > 0) // Check if car was added into DB successfully.
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public List<Car> GetCarsByBrandId(int brandId)
-        {
-            return _carDal.GetAll(c => c.BrandId == brandId);
-        }
-
-        public List<Car> GetCarsByColorId(int colorId)
-        {
-            return _carDal.GetAll(c => c.ColorId == colorId);
-        }
-
-        private bool ValidateCarName(Car car)
-        {
-            if (car.CarName.Length>2 && car.DailyPrice>0 )
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public List<Car> GetAll()
-        {
-            return _carDal.GetAll();
-        }
-
-        public Car GetById(int Id)
-        {
-            return _carDal.Get(c => c.CarId == Id);
-        }
-
-        public List<ProductDetailDto> GetProductDetails()
-        {
-            return _carDal.GetProductDetails();
-        }
-
     }
 }

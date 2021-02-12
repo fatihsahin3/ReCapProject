@@ -27,58 +27,58 @@ namespace ConsoleUI
 
         private static void TestGetAllCars(CarManager carManager)
         {
-            foreach (var car in carManager.GetAll())
+            var result = carManager.GetAll();
+
+            if (result.Success)
             {
-                Console.WriteLine(car.CarId + "-" + car.CarName + "-" + car.DailyPrice + "-" + car.Description);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarId + "-" + car.CarName + "-" + car.DailyPrice + "-" + car.Description);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }            
         }
 
         private static void TestGetCarById(CarManager carManager)
         {
-            Car car = carManager.GetById(9);
-            Console.WriteLine(car.CarId + "-" + car.CarName + "-" + car.DailyPrice + "-" + car.Description);
+            var result = carManager.GetById(1);
 
+            if (result.Success)
+            {
+                Console.WriteLine(result.Data.CarId + "-" + result.Data.CarName + "-" + result.Data.DailyPrice + "-" + result.Data.Description);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
 
         private static void TestAddCar(CarManager carManager) 
         {
-            if (carManager.Add(new Car { BrandId = 5, ColorId = 1, CarName = "Renault Megane", ModelYear = 2021, DailyPrice = 150, Description = "Renault Megane, Diesel, Automatic Transmission" }))
-            {
-                Console.WriteLine("Car was added into DB successfully!");
-            }
-            else
-            {
-                Console.WriteLine("Car could not be added into DB!");
-            }
+            var result = carManager.Add(new Car { BrandId = 5, ColorId = 1, CarName = "Renault Megane", ModelYear = 2021, DailyPrice = 150, Description = "Renault Megane, Diesel, Automatic Transmission" });
+            Console.WriteLine(result.Message);
         }
 
         private static void TestDeleteCar(CarManager carManager)
         {
-            if (carManager.Delete(new Car { CarId = 1003 }))
-            {
-                Console.WriteLine("Car was deleted from DB successfully!");
-            }
-            else
-            {
-                Console.WriteLine("Car could not be deleted!");
-            }
+            var result = carManager.Delete(new Car { CarId = 1004 });
+            Console.WriteLine(result.Message);
         }
 
         private static void TestUpdateCar(CarManager carManager)
         {
-            if (carManager.Update(new Car { CarId = 1004, BrandId = 5, ColorId = 2, CarName = "Renault Symbol", ModelYear = 2016, DailyPrice = 100, Description = "Renault Symbol, Diesel, Manual Transmission" }))
-            {
-                Console.WriteLine("Car was updated successfully!");
-            }
-            else
-            {
-                Console.WriteLine("Car could not be updated!");
-            }
+            var result = carManager.Update(new Car { CarId = 11, BrandId = 5, ColorId = 2, CarName = "Renault Symbol", ModelYear = 2016, DailyPrice = 100, Description = "Renault Symbol, Diesel, Manual Transmission" });
+            Console.WriteLine(result.Message);
         }
 
         private static void TestGetAllColors(ColorManager colorManager)
         {
-            foreach (var color in colorManager.GetAll())
+            var result = colorManager.GetAll();
+
+            foreach (var color in result.Data)
             {
                 Console.WriteLine(color.ColorId + "-" + color.ColorName);
             }
@@ -86,7 +86,9 @@ namespace ConsoleUI
 
         private static void TestGetAllBrands(BrandManager brandManager)
         {
-            foreach (var brand in brandManager.GetAll())
+            var result = brandManager.GetAll();
+
+            foreach (var brand in result.Data)
             {
                 Console.WriteLine(brand.BrandId + "-" + brand.BrandName);
             }
@@ -94,10 +96,19 @@ namespace ConsoleUI
 
         private static void TestProductDetails(CarManager carManager)
         {
-            foreach (var car in carManager.GetProductDetails())
+            var result = carManager.GetProductDetails();
+
+            if (result.Success)
             {
-                Console.WriteLine(car.CarName + "-" + car.BrandName + "-" + car.ColorName + "-" + car.DailyPrice);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName + "-" + car.BrandName + "-" + car.ColorName + "-" + car.DailyPrice);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            } 
         }
 
         private static void TestCarRentalApplication(CarManager carManager)
@@ -107,21 +118,19 @@ namespace ConsoleUI
                               "***** You can view available cars below: *****\n" +
                               "**********************************************\n");
 
-            for (int i = 0; i < carManager.GetAll().Count; i++)
+            var result = carManager.GetAll();
+
+            if (result.Success)
             {
-                Console.WriteLine(i + 1 + ") " + carManager.GetAll()[i].CarName + ", Model Year:" + carManager.GetAll()[i].ModelYear + ", Daily Price:" + carManager.GetAll()[i].DailyPrice + ", Description:" + carManager.GetAll()[i].Description + "\n------------------------------------------------------------------------------------------------------------");
-                //Console.WriteLine((i + 1) + ") " + carManager.GetById(i + 1).CarName + ", Model Year:" + carManager.GetById(i + 1).ModelYear + ", Daily Price:" + carManager.GetById(i + 1).DailyPrice + ", Description:" + carManager.GetAll()[i].Description + "\n------------------------------------------------------------------------------------------------------------");
+                for (int i = 0; i < result.Data.Count; i++)
+                {
+                    Console.WriteLine(i + 1 + ") " + result.Data[i].CarName + ", Model Year:" + result.Data[i].ModelYear + ", Daily Price:" + result.Data[i].DailyPrice + ", Description:" + result.Data[i].Description + "\n------------------------------------------------------------------------------------------------------------");
+                }
             }
-
-            //foreach (var car in carManager.GetCarsByBrandId(3))
-            //{
-            //    Console.WriteLine(car.CarName + ", Model Year:" + car.ModelYear + ", Daily Price:" + car.DailyPrice + ", Description:" + car.Description);
-            //}
-
-            //foreach (var car in carManager.GetCarsByColorId(1))
-            //{
-            //    Console.WriteLine(car.CarName + ", Model Year:" + car.ModelYear + ", Daily Price:" + car.DailyPrice + ", Description:" + car.Description);
-            //}
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dto;
+using Core.Utilities.Results;
 
 namespace DataAccess.Concrete.InMemory
 {
@@ -31,17 +32,25 @@ namespace DataAccess.Concrete.InMemory
             };
         }
 
-        public int Add(Car car)
+        public void Add(Car car)
         {
             _cars.Add(car);
-            return 1;
         }
 
-        public int Delete(Car car)
+        public void Delete(Car car)
         {
             Car carToDelete = _cars.SingleOrDefault<Car>(c => c.CarId == car.CarId);
             _cars.Remove(carToDelete);
-            return 1;
+        }
+
+        public void Update(Car car)
+        {
+            Car carToUpdate = _cars.SingleOrDefault<Car>(c => c.CarId == car.CarId);
+            carToUpdate.BrandId = car.BrandId;
+            carToUpdate.ColorId = car.BrandId;
+            carToUpdate.ModelYear = car.ModelYear;
+            carToUpdate.DailyPrice = car.DailyPrice;
+            carToUpdate.Description = car.Description;
         }
 
         public Car Get(Expression<Func<Car, bool>> filter)
@@ -67,18 +76,6 @@ namespace DataAccess.Concrete.InMemory
         public List<ProductDetailDto> GetProductDetails()
         {
             throw new NotImplementedException();
-        }
-
-        public int Update(Car car)
-        {
-            Car carToUpdate = _cars.SingleOrDefault<Car>(c => c.CarId == car.CarId);
-            carToUpdate.BrandId = car.BrandId;
-            carToUpdate.ColorId = car.BrandId;
-            carToUpdate.ModelYear = car.ModelYear;
-            carToUpdate.DailyPrice = car.DailyPrice;
-            carToUpdate.Description = car.Description;
-
-            return 1;
         }
     }
 }
