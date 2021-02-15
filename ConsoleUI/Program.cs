@@ -13,6 +13,9 @@ namespace ConsoleUI
             CarManager carManager = new CarManager(new EfCarDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            UserManager userManager = new UserManager(new EfUserDal());
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
             //TestCarRentalApplication(carManager); // Test Car Rental Application
             //TestGetAllCars(carManager); //Test getting all cars in DB.
@@ -22,7 +25,9 @@ namespace ConsoleUI
             //TestUpdateCar(carManager); //Test updating a car in DB.
             //TestGetAllBrands(brandManager); // Test getting all brands in DB.
             //TestGetAllColors(colorManager); // Test getting all colors in DB.
-            TestProductDetails(carManager); // Test getting all details based on predefined DTO class.
+            //TestProductDetails(carManager); // Test getting all details based on predefined DTO class.
+            //TestAddCustomer(customerManager); //Test adding a customer into DB.
+            TestAddRental(rentalManager); //Test adding a rental into DB.
         }
 
         private static void TestGetAllCars(CarManager carManager)
@@ -109,6 +114,19 @@ namespace ConsoleUI
             {
                 Console.WriteLine(result.Message);
             } 
+        }
+
+        public static void TestAddCustomer(CustomerManager customerManager) 
+        {
+            var Result = customerManager.Add(new Customer { UserId = 1, CompanyName = "Siemens" });
+            Console.WriteLine(Result.Message);        
+        }
+
+        public static void TestAddRental(RentalManager rentalManager)
+        {
+            //var Result = rentalManager.GetByRentalId(5);
+            var Result = rentalManager.Add(new Rental { CarId = 1, CustomerId = 4, RentDate = new DateTime(2021, 1, 20, 10, 30, 00), ReturnDate = new DateTime(2021, 2, 1, 15, 00, 00) });
+            Console.WriteLine(Result.Message);
         }
 
         private static void TestCarRentalApplication(CarManager carManager)
