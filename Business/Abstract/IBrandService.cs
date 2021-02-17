@@ -6,7 +6,7 @@ using Core.Utilities.Results;
 
 namespace Business.Abstract
 {
-    interface IBrandService
+    public interface IBrandService
     {
         IDataResult<List<Brand>> GetAll();
         IDataResult<Brand> GetByBrandId(int brandId);
