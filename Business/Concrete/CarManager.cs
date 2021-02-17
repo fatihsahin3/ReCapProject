@@ -53,19 +53,19 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == Id), Messages.CarsListed);
         }
 
-        public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
+        public IDataResult<List<Car>> GetByBrandId(int brandId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId), Messages.CarsListed);
         }
 
-        public IDataResult<List<Car>> GetCarsByColorId(int colorId)
+        public IDataResult<List<Car>> GetByColorId(int colorId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId), Messages.CarsListed);
         }
 
         public IDataResult<List<Car>> GetAll()
         {
-            if (false) //DateTime.Now.Hour > 22 || DateTime.Now.Hour < 8
+            if (DateTime.Now.Hour > 22 || DateTime.Now.Hour < 8)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
@@ -75,7 +75,7 @@ namespace Business.Concrete
 
         public IDataResult<List<ProductDetailDto>> GetProductDetails()
         {
-            if (false) //DateTime.Now.Hour > 22 || DateTime.Now.Hour < 8
+            if (DateTime.Now.Hour > 22 || DateTime.Now.Hour < 8)
             {
                 return new ErrorDataResult<List<ProductDetailDto>>(Messages.MaintenanceTime);
             }
