@@ -8,6 +8,9 @@ using Entities.Dto;
 using DataAccess.Concrete.EntityFramework;
 using Core.Utilities.Results;
 using Business.Constraints;
+using FluentValidation;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation.FluentValidation;
 
 namespace Business.Concrete
 {
@@ -21,14 +24,11 @@ namespace Business.Concrete
         }
 
         public IResult Add(Car car)
-        {
-            if (ValidateCarData(car))
-            {
-                _carDal.Add(car);
-                return new SuccessResult(Messages.CarAdded);
-            }
+        {       
+            ValidationTool.Validate(new CarValidator(), car);
 
-            return new ErrorResult(Messages.CarDataInvalid);
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);            
         }
 
         public IResult Delete(Car car)
