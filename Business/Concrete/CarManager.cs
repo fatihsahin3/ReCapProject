@@ -11,6 +11,7 @@ using Business.Constraints;
 using FluentValidation;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 
 namespace Business.Concrete
 {
@@ -23,9 +24,10 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {       
-            ValidationTool.Validate(new CarValidator(), car);
+            //business codes
 
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);            
@@ -37,15 +39,13 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarDeleted);
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
-            if (ValidateCarData(car))
-            {
-                _carDal.Update(car);
-                return new SuccessResult(Messages.CarUpdated);
-            }
+            //business codes
 
-            return new ErrorResult(Messages.CarDataInvalid);
+            _carDal.Update(car);
+            return new SuccessResult(Messages.CarUpdated);
         }
 
         public IDataResult<Car> GetById(int Id)
@@ -81,18 +81,6 @@ namespace Business.Concrete
             }
 
             return new SuccessDataResult<List<ProductDetailDto>>(_carDal.GetProductDetails(), Messages.CarsListed);
-        }
-
-        private bool ValidateCarData(Car car)
-        {
-            if (car.CarName.Length > 2 && car.DailyPrice > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }
