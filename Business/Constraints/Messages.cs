@@ -16,6 +16,7 @@ namespace Business.Constraints
         public static string MaintenanceTime = "System in maintenance!";
         public static string CustomerAdded = "Customer was added!";
         public static string CustomerInvalid= "Customer data is invalid!";
+        public static string CarImageLimitExceeded = "Car Image Limit Exceeded!";
 
     }
 }

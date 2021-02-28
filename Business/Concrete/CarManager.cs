@@ -12,6 +12,7 @@ using FluentValidation;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 
 namespace Business.Concrete
 {
@@ -26,7 +27,7 @@ namespace Business.Concrete
 
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
-        {       
+        {
             //business codes
 
             _carDal.Add(car);
