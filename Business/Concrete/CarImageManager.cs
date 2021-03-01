@@ -58,9 +58,9 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
-        public IDataResult<CarImage> GetById(int Id)
+        public IDataResult<CarImage> GetById(int id)
         {
-            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.ImageId == Id));
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.ImageId == id));
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
