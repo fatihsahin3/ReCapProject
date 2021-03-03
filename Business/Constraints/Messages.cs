@@ -18,5 +18,13 @@ namespace Business.Constraints
         public static string CustomerInvalid= "Customer data is invalid!";
         public static string CarImageLimitExceeded = "Car Image Limit Exceeded!";
 
+        public static string AuthorizationDenied = "You have no access!";
+        public static string UserRegistered = "User registered successfully!";
+        public static string UserNotFound = "User could not be found!";
+        public static string PasswordError = "Pasword incorrect!";
+        public static string SuccessfulLogin = "Login successful!";
+        public static string UserAlreadyExists = "User already exists!t";
+        public static string AccessTokenCreated = "Access token has been successfully created!";
+
     }
 }
