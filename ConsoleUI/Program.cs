@@ -40,7 +40,7 @@ namespace ConsoleUI
             {
                 foreach (var car in result.Data)
                 {
-                    Console.WriteLine(car.CarId + "-" + car.CarName + "-" + car.DailyPrice + "-" + car.Description);
+                    Console.WriteLine(car.Id + "-" + car.CarName + "-" + car.DailyPrice + "-" + car.Description);
                 }
             }
             else
@@ -55,7 +55,7 @@ namespace ConsoleUI
 
             if (result.Success)
             {
-                Console.WriteLine(result.Data.CarId + "-" + result.Data.CarName + "-" + result.Data.DailyPrice + "-" + result.Data.Description);
+                Console.WriteLine(result.Data.Id + "-" + result.Data.CarName + "-" + result.Data.DailyPrice + "-" + result.Data.Description);
             }
             else
             {
@@ -71,7 +71,7 @@ namespace ConsoleUI
             {
                 foreach (var car in result.Data)
                 {
-                    Console.WriteLine(car.CarId + "-" + car.CarName + "-" + car.DailyPrice + "-" + car.Description);
+                    Console.WriteLine(car.Id + "-" + car.CarName + "-" + car.DailyPrice + "-" + car.Description);
                 }                
             }
             else
@@ -88,7 +88,7 @@ namespace ConsoleUI
             {
                 foreach (var car in result.Data)
                 {
-                    Console.WriteLine(car.CarId + "-" + car.CarName + "-" + car.DailyPrice + "-" + car.Description);
+                    Console.WriteLine(car.Id + "-" + car.CarName + "-" + car.DailyPrice + "-" + car.Description);
                 }
             }
             else
@@ -105,13 +105,13 @@ namespace ConsoleUI
 
         private static void TestDeleteCar(CarManager carManager)
         {
-            var result = carManager.Delete(new Car { CarId = 1004 });
+            var result = carManager.Delete(new Car { Id = 1004 });
             Console.WriteLine(result.Message);
         }
 
         private static void TestUpdateCar(CarManager carManager)
         {
-            var result = carManager.Update(new Car { CarId = 11, BrandId = 5, ColorId = 2, CarName = "Renault Symbol", ModelYear = 2016, DailyPrice = 100, Description = "Renault Symbol, Diesel, Manual Transmission" });
+            var result = carManager.Update(new Car { Id = 11, BrandId = 5, ColorId = 2, CarName = "Renault Symbol", ModelYear = 2016, DailyPrice = 100, Description = "Renault Symbol, Diesel, Manual Transmission" });
             Console.WriteLine(result.Message);
         }
 
@@ -121,7 +121,7 @@ namespace ConsoleUI
 
             foreach (var color in result.Data)
             {
-                Console.WriteLine(color.ColorId + "-" + color.ColorName);
+                Console.WriteLine(color.Id + "-" + color.ColorName);
             }
         }
 
@@ -131,7 +131,7 @@ namespace ConsoleUI
 
             foreach (var brand in result.Data)
             {
-                Console.WriteLine(brand.BrandId + "-" + brand.BrandName);
+                Console.WriteLine(brand.Id + "-" + brand.BrandName);
             }
         }
 

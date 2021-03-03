@@ -7,6 +7,7 @@ using DataAccess.Abstract;
 using Core.Utilities.Results;
 using Core.Aspects.Autofac.Validation;
 using Business.ValidationRules.FluentValidation;
+using Core.Entities.Concrete;
 
 namespace Business.Concrete
 {
@@ -44,9 +45,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetAll());
         }
 
-        public IDataResult<User> GetByUserId(int userId)
+        public IDataResult<User> GetByUserId(int id)
         {
-            return new SuccessDataResult<User>(_userDal.Get(b => b.UserId == userId));
+            return new SuccessDataResult<User>(_userDal.Get(b => b.Id == id));
         }
     }
 }
