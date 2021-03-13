@@ -5,11 +5,13 @@ using Core.Entities;
 
 namespace Entities.Dto
 {
-    public class ProductDetailDto : IDto
+    public class CarDetailDto : IDto
     {
-        public string CarName { get; set; }
+        public int Id { get; set; }
         public string BrandName { get; set; }
         public string ColorName { get; set; }
+        public string CarName { get; set; }
+        public int ModelYear { get; set; }
         public int DailyPrice { get; set; }
     }
 }

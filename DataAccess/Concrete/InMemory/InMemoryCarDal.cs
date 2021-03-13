@@ -73,7 +73,7 @@ namespace DataAccess.Concrete.InMemory
             return _cars.SingleOrDefault<Car>(c => c.Id == Id);
         }
 
-        public List<ProductDetailDto> GetProductDetails()
+        public List<CarDetailDto> GetCarDetails()
         {
             throw new NotImplementedException();
         }

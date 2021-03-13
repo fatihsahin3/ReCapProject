@@ -8,6 +8,7 @@ using Core.Utilities.Results;
 using Business.Constraints;
 using Core.Aspects.Autofac.Validation;
 using Business.ValidationRules.FluentValidation;
+using Entities.DTO;
 
 namespace Business.Concrete
 {
@@ -55,6 +56,11 @@ namespace Business.Concrete
         public IDataResult<Rental> GetByRentalId(int Id)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(b => b.Id == Id));
+        }
+
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(), Messages.RentalsListed);
         }
     }
 }

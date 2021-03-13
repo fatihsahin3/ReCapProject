@@ -9,6 +9,6 @@ namespace DataAccess.Abstract
 {
     public interface ICarDal : IEntityRepository<Car>
     {
-        List<ProductDetailDto> GetProductDetails();
+        List<CarDetailDto> GetCarDetails();
     }
 }

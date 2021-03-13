@@ -135,9 +135,9 @@ namespace ConsoleUI
             }
         }
 
-        private static void TestProductDetails(CarManager carManager)
+        private static void TestCarDetails(CarManager carManager)
         {
-            var result = carManager.GetProductDetails();
+            var result = carManager.GetCarDetails();
 
             if (result.Success)
             {
