@@ -12,6 +12,8 @@ namespace Core.Utilities.Helpers
         public static string Add(IFormFile file)
         {
             string sourcePath = Path.GetTempFileName();
+            string destFileNameForDb = CreateNewFilePathForDB(file);
+            string destFileNameForLocalFolder = CreateNewFilePathForLocalFolder(destFileNameForDb);
 
             if (file.Length > 0)
             {
@@ -20,10 +22,9 @@ namespace Core.Utilities.Helpers
                     file.CopyTo(stream);
                 }
             }
-
-            string destFileName = CreateNewFilePath(file);
-            File.Move(sourcePath, destFileName);
-            return destFileName;
+            
+            File.Move(sourcePath, destFileNameForLocalFolder);
+            return destFileNameForDb;
         }
 
         public static IResult Delete(string path)
@@ -42,7 +43,7 @@ namespace Core.Utilities.Helpers
 
         public static string Update(string sourcePath, IFormFile file)
         {
-            string result = CreateNewFilePath(file);
+            string result = CreateNewFilePathForLocalFolder(CreateNewFilePathForDB(file));
             
             if (sourcePath.Length > 0)
             {
@@ -56,16 +57,20 @@ namespace Core.Utilities.Helpers
             return result;
         }
 
-        public static string CreateNewFilePath(IFormFile file)
+        public static string CreateNewFilePathForDB(IFormFile file)
         {
             FileInfo fileInfo = new FileInfo(file.FileName);
             string fileExtension = fileInfo.Extension;
-
-            string path = Environment.CurrentDirectory + @"\Images";
             string newPath = Guid.NewGuid().ToString() + fileExtension;
 
-            string result = $@"{path}\{newPath}";
+            string result = $@"Images\{newPath}";
             return result;
+        }
+
+        public static string CreateNewFilePathForLocalFolder(string pathForLocalFolder) 
+        {
+            string path = Environment.CurrentDirectory + @"\wwwroot\" + pathForLocalFolder;
+            return path;
         }
     }
 }

@@ -66,7 +66,9 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarImageValidator))]
         public IDataResult<List<CarImage>> GetByCarId(int carId)
         {
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
+
+            List<CarImage> carImageList = _carImageDal.GetAll(c => c.CarId == carId);
+            return new SuccessDataResult<List<CarImage>>(carImageList);
         }
 
         [ValidationAspect(typeof(CarImageValidator))]

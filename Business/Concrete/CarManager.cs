@@ -93,6 +93,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.CarsListed);
         }
 
+        public IDataResult<List<CarDetailDto>> GetCarDetailsById(int carId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c=>c.Id == carId), Messages.CarsListed);
+        }
+
         [TransactionScopeAspect]
         public IResult AddTransactionalTest(Car car)
         {
