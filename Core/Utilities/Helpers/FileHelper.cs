@@ -43,18 +43,19 @@ namespace Core.Utilities.Helpers
 
         public static string Update(string sourcePath, IFormFile file)
         {
-            string result = CreateNewFilePathForLocalFolder(CreateNewFilePathForDB(file));
-            
+            string pathForDb = CreateNewFilePathForDB(file);
+            string pathForFolder = CreateNewFilePathForLocalFolder(pathForDb);
+
             if (sourcePath.Length > 0)
             {
-                using (var stream = new FileStream(result, FileMode.Create))
+                using (var stream = new FileStream(pathForFolder, FileMode.Create))
                 {
                     file.CopyTo(stream);
                 }
             }
             
             File.Delete(sourcePath);
-            return result;
+            return pathForDb;
         }
 
         public static string CreateNewFilePathForDB(IFormFile file)

@@ -43,7 +43,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Delete(CarImage carImage)
         {
-            FileHelper.Delete(carImage.ImagePath);
+            FileHelper.Delete(Environment.CurrentDirectory + @"\wwwroot\" + carImage.ImagePath);
             _carImageDal.Delete(carImage);
             return new SuccessResult();
         }
@@ -51,7 +51,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Update(IFormFile file, CarImage carImage)
         {
-            carImage.ImagePath = FileHelper.Update(_carImageDal.Get(c => c.Id == carImage.Id).ImagePath, file);
+            carImage.ImagePath = FileHelper.Update(Environment.CurrentDirectory + @"\wwwroot\" + _carImageDal.Get(c => c.Id == carImage.Id).ImagePath, file);
             carImage.CreationDate = DateTime.Now;
             _carImageDal.Update(carImage);
             return new SuccessResult();
@@ -66,9 +66,9 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarImageValidator))]
         public IDataResult<List<CarImage>> GetByCarId(int carId)
         {
+            //List<CarImage> carImageList = _carImageDal.GetAll(c => c.CarId == carId);
+            return new SuccessDataResult<List<CarImage>>(CheckIfAnyCarImageExists(carId));
 
-            List<CarImage> carImageList = _carImageDal.GetAll(c => c.CarId == carId);
-            return new SuccessDataResult<List<CarImage>>(carImageList);
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
@@ -90,7 +90,7 @@ namespace Business.Concrete
 
         private List<CarImage> CheckIfAnyCarImageExists(int carId)
         {
-            string path = Environment.CurrentDirectory + @"\images\DefaultCar.jpg";
+            string path = @"\images\DefaultCar.jpg";
             var result = _carImageDal.GetAll(c => c.CarId == carId).Any();
 
             if (result)
