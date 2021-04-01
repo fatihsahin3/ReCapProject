@@ -13,12 +13,24 @@ namespace Business.Constraints
         public static string CarsListed = "Cars were listed! ";
         public static string CarRented = "Car has been rented! ";
         public static string CarNotReturned = "Car has not been returned yet! ";
-        public static string MaintenanceTime = "System in maintenance!";
+
+        public static string BrandAdded = "Brand was added! ";
+        public static string BrandDeleted = "Brand was deleted! ";
+        public static string BrandUpdated = "Brand was updated! ";
+
+        public static string ColorAdded = "Color was added! ";
+        public static string ColorDeleted = "Color was deleted! ";
+        public static string ColorUpdated = "Color was updated! ";
+
         public static string CustomerAdded = "Customer was added!";
         public static string CustomerInvalid= "Customer data is invalid!";
         public static string CustomersListed = "Customers were listed! ";
+
         public static string CarImageLimitExceeded = "Car Image Limit Exceeded!";
+
         public static string RentalsListed = "Rentals were listed! ";
+
+        public static string MaintenanceTime = "System in maintenance!";
 
         public static string AuthorizationDenied = "You have no access!";
         public static string UserRegistered = "User registered successfully!";
