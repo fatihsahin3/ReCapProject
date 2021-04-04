@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCustomerDal : EfEntityRepositoryBase<Customer, RPDBContext>, ICustomerDal
     {
-        public List<CustomerDetailDto> GetCustomerDetails()
+        public List<CustomerDetailDto> GetCustomerDetails(Expression<Func<CustomerDetailDto, bool>> filter = null)
         {
             using (RPDBContext context = new RPDBContext())
             {
@@ -21,7 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on customer.UserId equals user.Id
                              select new CustomerDetailDto { Id = customer.Id, CustomerName = user.FirstName + " " + user.LastName, Email=user.Email, CompanyName=customer.CompanyName };
 
-                return result.ToList();
+                return filter == null? result.ToList() : result.Where(filter).ToList();
             }
         }
     }

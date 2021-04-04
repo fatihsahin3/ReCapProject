@@ -51,14 +51,19 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
         }
 
-        public IDataResult<Customer> GetByCustomerId(int Id)
+        public IDataResult<Customer> GetByCustomerId(int id)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(b => b.Id == Id));
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == id));
         }
 
         public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
         {
             return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails(), Messages.CustomersListed);
+        }
+
+        public IDataResult<List<CustomerDetailDto>> GetCustomerDetailsByEmail(string email)
+        {
+            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails(c=> c.Email == email), Messages.CustomersListed);
         }
     }
 }
