@@ -30,6 +30,10 @@ namespace Business.Constraints
 
         public static string RentalsListed = "Rentals were listed! ";
 
+        public static string CreditScoreAdded = "Credit score was added! ";
+        public static string CreditScoreDeleted = "Credit score was deleted! ";
+        public static string CreditScoreUpdated = "Credit score was updated! ";
+
         public static string MaintenanceTime = "System in maintenance!";
 
         public static string AuthorizationDenied = "You have no access!";
