@@ -4,6 +4,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
+using Entities.Concrete;
 using Entities.DTO;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,13 @@ namespace Business.Concrete
     public class AuthManager : IAuthService
     {
         private IUserService _userService;
+        private ICustomerService _customerService;
         private ITokenHelper _tokenHelper;
 
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
+        public AuthManager(IUserService userService, ICustomerService customerService, ITokenHelper tokenHelper)
         {
             _userService = userService;
+            _customerService = customerService;
             _tokenHelper = tokenHelper;
         }
 
@@ -36,6 +39,14 @@ namespace Business.Concrete
                 Status = true
             };
             _userService.Add(user);
+
+            var customer = new Customer
+            {
+                UserId = _userService.GetByMail(userForRegisterDto.Email).Id,
+                CompanyName = userForRegisterDto.CompanyName
+            };
+            _customerService.Add(customer);
+
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
