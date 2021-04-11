@@ -10,15 +10,15 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new EfCarDal());
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
-            ColorManager colorManager = new ColorManager(new EfColorDal());
-            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-            UserManager userManager = new UserManager(new EfUserDal());
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //CarManager carManager = new CarManager(new EfCarDal());
+            //BrandManager brandManager = new BrandManager(new EfBrandDal());
+            //ColorManager colorManager = new ColorManager(new EfColorDal());
+            //CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            //UserManager userManager = new UserManager(new EfUserDal());
+            //RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
             //TestCarRentalApplication(carManager); // Test Car Rental Application
-            TestGetAllCars(carManager); //Test getting all cars in DB.
+            //TestGetAllCars(carManager); //Test getting all cars in DB.
             //TestGetCarById(carManager, 1); //Test getting a car by ID.
             //TestGetCarByBrandId(carManager, 3); //Test getting cars by BrandID.
             //TestGetCarByColorId(carManager, 1); //Test getting cars by ColorID.

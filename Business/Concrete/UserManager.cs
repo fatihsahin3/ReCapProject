@@ -8,16 +8,21 @@ using Core.Utilities.Results;
 using Core.Aspects.Autofac.Validation;
 using Business.ValidationRules.FluentValidation;
 using Core.Entities.Concrete;
+using Entities.DTO;
+using Core.Utilities.Security.Hashing;
+using Business.Constraints;
 
 namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
         IUserDal _userDal;
+        ICustomerDal _customerDal;
 
-        public UserManager(IUserDal userDal)
+        public UserManager(IUserDal userDal, ICustomerDal customerDal)
         {
             _userDal = userDal;
+            _customerDal = customerDal;
         }
 
         [ValidationAspect(typeof(UserValidator))]
@@ -40,7 +45,34 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        public IDataResult<List<User>> GetAll()
+        public IResult UpdateUserDetails(UserDetailForUpdateDto userDetailForUpdate)
+        {
+            var user = GetByUserId(userDetailForUpdate.Id).Data;
+
+            if (!HashingHelper.VerifyPasswordHash(userDetailForUpdate.CurrentPassword, user.PasswordHash,
+                user.PasswordSalt)) return new ErrorResult(Messages.PasswordError);
+
+            user.FirstName = userDetailForUpdate.FirstName;
+            user.LastName = userDetailForUpdate.LastName;
+            user.Email = userDetailForUpdate.Email;
+            if (!string.IsNullOrEmpty(userDetailForUpdate.NewPassword))
+            {
+                byte[] passwordHash, passwordSalt;
+                HashingHelper.CreatePasswordHash(userDetailForUpdate.NewPassword, out passwordHash, out passwordSalt);
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+            }
+
+            _userDal.Update(user);
+
+            var customer = _customerDal.Get(c => c.Id == userDetailForUpdate.CustomerId);
+            customer.CompanyName = userDetailForUpdate.CompanyName;
+            _customerDal.Update(customer);
+
+            return new SuccessResult(Messages.UserDetailsUpdated);
+        }
+
+            public IDataResult<List<User>> GetAll()
         {
             return new SuccessDataResult<List<User>>(_userDal.GetAll());
         }

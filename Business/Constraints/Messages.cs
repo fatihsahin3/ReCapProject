@@ -26,9 +26,15 @@ namespace Business.Constraints
         public static string CustomerInvalid= "Customer data is invalid!";
         public static string CustomersListed = "Customers were listed! ";
 
+        public static string UserDetailsUpdated = "User Details were updated! ";
+
         public static string CarImageLimitExceeded = "Car Image Limit Exceeded!";
 
         public static string RentalsListed = "Rentals were listed! ";
+
+        public static string creditCardAdded = "Credit card was added! ";
+        public static string creditCardDeleted = "Credit card was deleted! ";
+        public static string creditCardUpdated = "Credit card was updated! ";
 
         public static string CreditScoreAdded = "Credit score was added! ";
         public static string CreditScoreDeleted = "Credit score was deleted! ";
