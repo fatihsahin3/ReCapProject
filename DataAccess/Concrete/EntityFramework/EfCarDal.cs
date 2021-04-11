@@ -13,6 +13,13 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, RPDBContext>, ICarDal
     {
+        ICarImageDal _carImageDal;
+
+        public EfCarDal(ICarImageDal carImageDal)
+        {
+            _carImageDal = carImageDal;
+        }
+
         public List<CarDetailDto> GetCarDetails(Expression<Func<Car, bool>> filter = null)
         {
             using (RPDBContext context = new RPDBContext())
@@ -22,7 +29,9 @@ namespace DataAccess.Concrete.EntityFramework
                              on car.BrandId equals brand.Id
                              join color in context.Colors
                              on car.ColorId equals color.Id
-                             select new CarDetailDto { Id = car.Id, BrandId=car.BrandId, BrandName = brand.BrandName, ColorId=car.ColorId, ColorName = color.ColorName, CarName = car.CarName, ModelYear = car.ModelYear, DailyPrice = car.DailyPrice, Description=car.Description, MinCreditScore=car.MinCreditScore };
+                             join image in context.CarImages
+                             on car.Id equals image.CarId
+                             select new CarDetailDto { Id = car.Id, BrandId=car.BrandId, BrandName = brand.BrandName, ColorId=car.ColorId, ColorName = color.ColorName, CarName = car.CarName, ModelYear = car.ModelYear, DailyPrice = car.DailyPrice, Description=car.Description, MinCreditScore=car.MinCreditScore, ImagePath = image.ImagePath};
 
                 return result.ToList();
             }

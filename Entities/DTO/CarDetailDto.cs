@@ -17,5 +17,6 @@ namespace Entities.Dto
         public int DailyPrice { get; set; }
         public string Description { get; set; }
         public int MinCreditScore { get; set; }
+        public string ImagePath { get; set; }
     }
 }
