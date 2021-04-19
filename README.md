@@ -22,8 +22,8 @@ FluentValidation is the Validation Tool used for the verification process.
 - Aspects
 - File upload
 
-## Packageces
-| Packageces |
+## Packages
+| Packages |
 | ------------- |
 | Asp.Net Core 3.1 | 
 | .Net Framework 4.5 |
