@@ -1,5 +1,6 @@
 ### General info
 This project is the backend side of RentACar project in my repositories. You can check the front end project here =><a href="https://github.com/fatihsahin3/RentACarFrontEnd">RentACarFrontEnd</a>
+
 The project consists of 5 layers: Entities, DataAccess, Business, Core and WebAPI.  
 Each operation is controlled by its own manager and the manager uses the Dal classes to implement crud operations. All data access layers implement generic IEntityRepository interface as a common outline.  
 Autofac IoC Container is used for Dependency Injection and Aspect Oriented Programming (Aspects: ValidationAspect, CacheAspect, CacheRemoveAspect, PerformanceAspect, SecuredOperationAspect, TransactionAsepct). 
